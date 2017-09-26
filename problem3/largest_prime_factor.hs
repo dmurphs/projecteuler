@@ -1,45 +1,26 @@
--- Find largest prime factor of number
+import Utils (isPrime, isMultiple) -- these functions are in hslib/Utils.hs, make sure to load
 
-import Data.List
-
---Let's implement the sieve of Eratosthenes first
-sieve :: Int -> [Int]
-sieve n =
+largestPrimeFactor n =
     let
-        -- Create a list of True/False to indicate whether given element is prime
-        -- We start with 0 and 1 indices as false since they are not prime
-        -- Take n-1 more true values so index reaches n
-        initialSieveList = [False,False] ++ (take (n-1) $ repeat True)
-        -- Start with 2 as first prime
-        -- sieve' gives list of booleans where index is true when prime and false o/w
-        sieveList = sieve' initialSieveList 2
-        zippedSieveList = zip [0..n] sieveList
+        -- we don't want to check any numbers over sqrt n
+        maxNum = floor $ sqrt (fromIntegral n)
+
+        -- helper function for recursion
+        largestPrimeFactor' n start largestFactor
+            | start >= maxNum = largestFactor
+            | (isMultiple n start) && (isPrime start || isPrime startQuotient) =
+                largestPrimeFactor' n (start + incrementBy) (maxPrime start startQuotient)
+            | otherwise = largestPrimeFactor' n (start + incrementBy) largestFactor
+
+            where
+                maxPrime a b = maximum $ filter isPrime [a, b]
+                startQuotient = quot n start
+                -- We add one after the first iteration when start = 2, then
+                -- we can add to after that since we only need to check odd
+                -- numbers past 2
+                incrementBy = if start > 2 then 2 else 1
     in
-        [i | (i,_) <- (filter (\(i,isPrime) -> isPrime) zippedSieveList)]
+        largestPrimeFactor' n 2 0
 
-
-isMultiple :: Int -> Int -> Bool
-isMultiple m n = (m `mod` n == 0)
-
-newSieveListMap :: Int -> Int -> [Bool] -> Bool
-newSieveListMap index startingPrime oldSieveList = case (index <= startingPrime) of 
-    -- Leave all terms smaller than starting prime alone
-    True -> oldSieveList !! index
-    -- Flip terms that are multiples of the starting prime and not already false
-    otherwise -> (oldSieveList !! index) && (not (isMultiple index startingPrime))
-
-sieve' :: [Bool] -> Int -> [Bool]
-sieve' sieveList startingPrime =
-    let
-        sieveListIndices = [0..((length sieveList) - 1)]
-        -- Mark all multiples of starting prime as False to indicate not prime
-        newSieveList = map (\i -> newSieveListMap i startingPrime sieveList) sieveListIndices
-        nextPrime = findIndex (\i -> (i > startingPrime) && (newSieveList !! i)) sieveListIndices
-    in
-        case nextPrime of
-            Nothing -> newSieveList
-            Just p -> sieve' newSieveList p
-
--- Now that we have a sieve, lets write a function to get prime factors of a number
- 
-
+main :: IO ()
+main = print $ largestPrimeFactor 600851475143
