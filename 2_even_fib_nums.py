@@ -1,12 +1,4 @@
-def memoize(f):
-	cache  = {}
-	def decorated(n):
-		if n in cache:
-			return cache[n]
-		else:
-			cache[n] = f(n)
-			return cache[n]
-	return decorated
+from pylib.utils import memoize
 
 @memoize
 def fib(n):
@@ -23,4 +15,4 @@ def even_fib_sum(upper_bound):
 		# even numbers in fib repeat every three terms (look up proof)
 		i += 3
 
-print even_fib_sum(4000000)
+print(even_fib_sum(4000000))
