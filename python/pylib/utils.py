@@ -10,6 +10,7 @@ def memoize(f):
             return cache[n]
     return decorated
 
+@memoize
 def primes_in_range(n):
     isPrimeList = [True for x in range(0, n+1)]
     isPrimeList[0] = False

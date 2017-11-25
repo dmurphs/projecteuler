@@ -1,9 +1,8 @@
 from pylib.utils import primes_in_range
 
 def get_10001_prime():
-	found = False
 	n = 10001
-	while not found:
+	while True:
 		primeList = primes_in_range(n)
 		number_of_primes = 0
 		for x in range(len(primeList)):

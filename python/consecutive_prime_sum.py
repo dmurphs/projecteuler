@@ -1,4 +1,4 @@
-from ten_thousand_first_prime import primes_in_range
+from pylib.utils import primes_in_range
 
 primes_under_million = filter(lambda x: x[1], [x for x in enumerate(primes_in_range(1000000))])
 
