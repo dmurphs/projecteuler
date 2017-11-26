@@ -1,4 +1,4 @@
-from pylib.utils import is_prime
+from operator import itemgetter
 
 def collatz(n):
   if n == 1:
@@ -10,12 +10,7 @@ def collatz(n):
   else:
     return [3*n+1] + collatz(3*n+1)
 
-primes = filter(is_prime, range(1000000))
+lengths = [(n, len(collatz(n))) for n in range(1,1000000)]
 
-l = [len(collatz(n)) for n in primes]
-
-maximum = sorted(l)[-1]
-
-for num,val in enumerate(l):
-  if val == maximum:
-    print primes[num],val
+max_seq = max(lengths, key=itemgetter(1))
+print(max_seq)

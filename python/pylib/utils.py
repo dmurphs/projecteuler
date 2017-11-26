@@ -26,10 +26,10 @@ def primes_in_range(n):
     return isPrimeList
 
 def is_prime(n):
-    if n < 2 or n % 2 == 0:
-        return False
-    elif n == 2:
+    if n == 2:
         return True
+    elif n < 2 or n % 2 == 0:
+        return False
     else:
         for x in range(3, int(math.ceil(math.sqrt(n))), 2):
             if n % x == 0:

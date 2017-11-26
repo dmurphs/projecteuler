@@ -38,3 +38,5 @@ def all_odd(n):
 def circular_primes_under(n):
   possibilities = [x[0] for x in enumerate(sieve(n)) if x[1] and (all_odd(x[0]) or x[0] == 2)]
   return filter(is_circular, possibilities)
+
+print(len(circular_primes_under(1000000)))
