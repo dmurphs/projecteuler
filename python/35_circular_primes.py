@@ -1,29 +1,18 @@
 # 35 find circular primes under a given number n
-
+from pylib.utils import is_prime
 import math
 
 def sieve(n):
   primes = [True]*n
   primes[0] = primes[1] = False
-  
+
   for (index, val) in enumerate(primes):
     if val:
       for x in range(index*index, n, index):
         primes[x] = False
-  
+
   return primes
-  
-def is_prime(n):
-    if n < 2 or n % 2 == 0:
-        return False
-    elif n == 2:
-        return True
-    else:
-        for x in range(3, int(math.ceil(math.sqrt(n))), 2):
-            if n % x == 0:
-                return False
-    return True
-    
+
 def rotations(numstr):
     l = [numstr]
     x = 0
@@ -39,14 +28,13 @@ def is_circular(n):
         if not is_prime(int(num)):
             return False
     return True
-    
+
 def all_odd(n):
     for x in str(n):
         if int(n) % 2 == 0:
             return False
     return True
-    
+
 def circular_primes_under(n):
   possibilities = [x[0] for x in enumerate(sieve(n)) if x[1] and (all_odd(x[0]) or x[0] == 2)]
   return filter(is_circular, possibilities)
-

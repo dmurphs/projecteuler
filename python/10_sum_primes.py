@@ -1,4 +1,4 @@
-from ten_thousand_first_prime import primes_in_range
+from pylib.utils import primes_in_range
 
 def get_primes_under(n):
 	l = primes_in_range(n)

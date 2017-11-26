@@ -1,15 +1,15 @@
-from circular_primes import is_prime
+from pylib.utils import is_prime
 
 def collatz(n):
   if n == 1:
     return []
-    
+
   elif n % 2 == 0:
     return [n/2] + collatz(n/2)
-  
+
   else:
     return [3*n+1] + collatz(3*n+1)
-    
+
 primes = filter(is_prime, range(1000000))
 
 l = [len(collatz(n)) for n in primes]

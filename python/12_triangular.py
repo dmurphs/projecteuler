@@ -1,6 +1,5 @@
-from even_fib_nums import memoize
-from ten_thousand_first_prime import primes_in_range
-import math    
+from pylib.utils import primes_in_range, memoize
+import math
 
 def nth_triangular(n):
     return reduce(lambda x,y: x+y, range(1,n+1))
